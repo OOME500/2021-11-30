@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
 import tw.com.fcb.mimosa.workshop.vaccine.ddd.ResidentMapper;
 import tw.com.fcb.mimosa.workshop.vaccine.ddd.repository.ChooseEntity;
 import tw.com.fcb.mimosa.workshop.vaccine.ddd.repository.ResidentEntity;
@@ -31,10 +32,9 @@ public class ResidentService {
 		}
 	}
 
-	public void chooseVaccine(long id, ChooseVaccine command) {
+	public void chooseVaccine(long id, ChooseVaccine command) {	
 		var db = repository.findById(id).orElseThrow();
 		var append = command.getVaccines().stream().map(mapper::toChooseEntity)
-				// .forEach(db.getChooses()::add);
 				.collect(Collectors.toList());
 		db.getChooses().addAll(append);
 		repository.save(db);

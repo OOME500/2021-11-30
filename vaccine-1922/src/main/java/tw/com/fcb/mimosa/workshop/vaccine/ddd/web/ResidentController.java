@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +29,7 @@ class ResidentController {
   final ResidentService service;
 
   @PostMapping
-  void makeAppointment(@RequestBody MakeAppointment command) {
+  void makeAppointment(@Valid @RequestBody MakeAppointment command) {
     service.makeAppointment(command);
   }
 
@@ -39,7 +41,7 @@ class ResidentController {
 
   @PutMapping("/{id}/vaccines")
   void chooseVaccine(@PathVariable("id") long id,
-      @RequestBody ChooseVaccine command) {
+      @Valid @RequestBody ChooseVaccine command) {
     service.chooseVaccine(id, command);
   }
 
@@ -51,7 +53,6 @@ class ResidentController {
 
   @GetMapping
   List<ResidentEntity> getResidents() {
-	  return service.getResidents();
-	  
+	  return service.getResidents(); 
   }
 }
